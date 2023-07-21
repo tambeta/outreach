@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "outreach.helloWorld",
-        "title": "Hello World"
+        "command": "outreach.sendToExternal",
+        "title": "Send selection to external application"
       }
     ]
   },
