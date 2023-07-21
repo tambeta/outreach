@@ -1,0 +1,7 @@
+*.vsix
+.vscode-test/
+dist
+node_modules
+out
+vsc-extension-quickstart.md
+.vscode/settings.json
