@@ -14,10 +14,82 @@
   "contributes": {
     "commands": [
       {
-        "command": "outreach.sendToExternal",
-        "title": "Send selection to external application"
+        "command": "outreach.sendToExternal1",
+        "title": "Send selection to external application 1"
+      },
+      {
+        "command": "outreach.sendToExternal2",
+        "title": "Send selection to external application 2"
+      },
+      {
+        "command": "outreach.sendToExternal3",
+        "title": "Send selection to external application 3"
+      },
+      {
+        "command": "outreach.sendToExternal4",
+        "title": "Send selection to external application 4"
+      },
+      {
+        "command": "outreach.sendToExternal5",
+        "title": "Send selection to external application 5"
+      },
+      {
+        "command": "outreach.sendToExternal6",
+        "title": "Send selection to external application 6"
+      },
+      {
+        "command": "outreach.sendToExternal7",
+        "title": "Send selection to external application 7"
+      },
+      {
+        "command": "outreach.sendToExternal8",
+        "title": "Send selection to external application 8"
+      },
+      {
+        "command": "outreach.sendToExternal9",
+        "title": "Send selection to external application 9"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "outreach.sendToExternal1",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal2",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal3",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal4",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal5",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal6",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal7",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal8",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        },
+        {
+          "command": "outreach.sendToExternal9",
+          "when": "activeEditor =~ /text(File|Resource)Editor$/ && !activeEditorIsReadonly"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",

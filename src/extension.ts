@@ -58,15 +58,17 @@ const pipeToProcess = (text: String) => new Promise<string[]>((resolve, reject) 
 });
 
 export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand('outreach.sendToExternal', async () => {
-    const editor = vscode.window.activeTextEditor;
-    
-    if (editor) {
-      replaceSelectionWithExternalOutput(editor);
-    }
-  });
-  
-  context.subscriptions.push(disposable);
+  for (let i = 0; i <= 9; i++) {
+    let disposable = vscode.commands.registerCommand(`outreach.sendToExternal${i}`, async () => {
+      const editor = vscode.window.activeTextEditor;
+
+      if (editor) {
+        replaceSelectionWithExternalOutput(editor);
+      }
+    });
+
+    context.subscriptions.push(disposable);
+  }
 }
 
 export function deactivate() {};
