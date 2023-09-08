@@ -14,6 +14,11 @@ const error = (...args: any[]) => {
   channel.show();
 };
 
+const getConfigValue = (key: string) => {
+  const config = vscode.workspace.getConfiguration('outreach');
+  return config.get<string>(key);
+}
+
 const isSelectionPresent = (editor: vscode.TextEditor) => {
   const selection = editor.selection;
   return selection && !selection.start.isEqual(selection.end);
@@ -37,9 +42,8 @@ const clearSelection = (editor: vscode.TextEditor) => {
 };
 
 const runCommand = async (commandIdx: number) => {
-  const config = vscode.workspace.getConfiguration('outreach');
   const editor = vscode.window.activeTextEditor;
-  const command = config.get<string>(`commands.externalCommand${commandIdx}`);
+  const command = getConfigValue(`commands.externalCommand${commandIdx}`);
 
   if (editor && command) {    
     try {
