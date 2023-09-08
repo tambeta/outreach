@@ -78,7 +78,7 @@ const replaceSelectionWithExternalOutput = async (editor: vscode.TextEditor, com
 
 const pipeToProcess = (text: string, command: string) => new Promise<string[]>((resolve, reject) => {
   const proc = child_process.spawn(command, {
-    shell: SHELL,
+    shell: getConfigValue('shellPath') || true,
   });
 
   let result = '';
