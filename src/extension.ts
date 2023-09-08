@@ -14,13 +14,35 @@ const error = (...args: any[]) => {
   channel.show();
 };
 
+const isSelectionPresent = (editor: vscode.TextEditor) => {
+  const selection = editor.selection;
+  return selection && !selection.start.isEqual(selection.end);
+};
+
+const selectLineWithCursor = (editor: vscode.TextEditor) => {
+  const line = editor.selection.active.line;
+  
+  if (line != null) {
+    const lineStart = new vscode.Position(line, 0);
+    const lineEnd = editor.document.lineAt(line).range.end;
+    
+    editor.selection = new vscode.Selection(lineStart, lineEnd);
+  } else {
+    throw new Error('Cannot select the line with the cursor');
+  }
+};
+
 const runCommand = async (commandIdx: number) => {
   const config = vscode.workspace.getConfiguration('outreach');
   const editor = vscode.window.activeTextEditor;
   const command = config.get<string>(`commands.externalCommand${commandIdx}`);
 
-  if (editor && command) {
+  if (editor && command) {    
     try {
+      if (!isSelectionPresent(editor)) {
+        selectLineWithCursor(editor);
+      }
+      
       await replaceSelectionWithExternalOutput(editor, command);
     } catch (e: any) {
       error(`Failed to execute \`${command}\`: ${e?.message || e}`);
