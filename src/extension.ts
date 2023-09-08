@@ -14,6 +14,20 @@ const error = (...args: any[]) => {
   channel.show();
 };
 
+const runCommand = async (commandIdx: number) => {
+  const config = vscode.workspace.getConfiguration('outreach');
+  const editor = vscode.window.activeTextEditor;
+  const command = config.get<string>(`commands.externalCommand${commandIdx}`);
+
+  if (editor && command) {
+    try {
+      await replaceSelectionWithExternalOutput(editor, command);
+    } catch (e: any) {
+      error(`Failed to execute \`${command}\`: ${e?.message || e}`);
+    }
+  }
+};
+
 const replaceSelectionWithExternalOutput = async (editor: vscode.TextEditor, command: string) => {
   const document = editor.document;
   const selection = editor.selection;
@@ -61,23 +75,10 @@ const pipeToProcess = (text: string, command: string) => new Promise<string[]>((
 });
 
 export function activate(context: vscode.ExtensionContext) {
-  const config = vscode.workspace.getConfiguration('outreach');
-  
   for (let i = 1; i <= 9; i++) {
-    let disposable = vscode.commands.registerCommand(`outreach.sendToExternal${i}`, async () => {
-      const editor = vscode.window.activeTextEditor;
-      const command = config.get<string>(`commands.externalCommand${i}`);
-      
-      if (editor && command) {
-        try {
-          await replaceSelectionWithExternalOutput(editor, command);          
-        } catch (e: any) {
-          error(`Failed to execute \`${command}\`: ${e?.message || e}`);
-        }
-      }
-    });
-
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(
+      vscode.commands.registerCommand(`outreach.sendToExternal${i}`, runCommand.bind(null, i))
+    );
   }
 }
 
