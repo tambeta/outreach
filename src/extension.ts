@@ -32,6 +32,10 @@ const selectLineWithCursor = (editor: vscode.TextEditor) => {
   }
 };
 
+const clearSelection = (editor: vscode.TextEditor) => {
+  editor.selection = new vscode.Selection(editor.selection.end, editor.selection.end);
+};
+
 const runCommand = async (commandIdx: number) => {
   const config = vscode.workspace.getConfiguration('outreach');
   const editor = vscode.window.activeTextEditor;
@@ -44,6 +48,8 @@ const runCommand = async (commandIdx: number) => {
       }
       
       await replaceSelectionWithExternalOutput(editor, command);
+      
+      clearSelection(editor);
     } catch (e: any) {
       error(`Failed to execute \`${command}\`: ${e?.message || e}`);
     }
