@@ -5,3 +5,4 @@ node_modules
 out
 vsc-extension-quickstart.md
 .vscode/settings.json
+.vscode/*.code-snippets
