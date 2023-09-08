@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import * as child_process from 'child_process';
 
 const SHELL = '/bin/bash';
-const COMMAND = '/bin/sort';
 
 const channel = vscode.window.createOutputChannel('Outreach');
 
@@ -10,25 +9,29 @@ const log = (...args: any[]) => {
   args.forEach(arg => channel.appendLine(arg));    
 };
 
-const replaceSelectionWithExternalOutput = async (editor: vscode.TextEditor) => {
+const error = (...args: any[]) => {  
+  log(...args);
+  channel.show();
+};
+
+const replaceSelectionWithExternalOutput = async (editor: vscode.TextEditor, command: string) => {
   const document = editor.document;
   const selection = editor.selection;
   const text = document.getText(selection);
 
-  const [result, err] = await pipeToProcess(text);
+  const [result, err] = await pipeToProcess(text, command);
 
   editor.edit(editBuilder => {
     editBuilder.replace(selection, result);
   });
 
   if (err) {
-    log(`Running \`${COMMAND}\` produced output to the standard error stream:`, err.trim());
-    channel.show();
+    error(`Running \`${command}\` produced output to the standard error stream:`, err.trim());
   }
 };
 
-const pipeToProcess = (text: String) => new Promise<string[]>((resolve, reject) => {
-  const proc = child_process.spawn(COMMAND, {
+const pipeToProcess = (text: string, command: string) => new Promise<string[]>((resolve, reject) => {
+  const proc = child_process.spawn(command, {
     shell: SHELL,
   });
 
@@ -58,12 +61,19 @@ const pipeToProcess = (text: String) => new Promise<string[]>((resolve, reject) 
 });
 
 export function activate(context: vscode.ExtensionContext) {
-  for (let i = 0; i <= 9; i++) {
+  const config = vscode.workspace.getConfiguration('outreach');
+  
+  for (let i = 1; i <= 9; i++) {
     let disposable = vscode.commands.registerCommand(`outreach.sendToExternal${i}`, async () => {
       const editor = vscode.window.activeTextEditor;
-
-      if (editor) {
-        replaceSelectionWithExternalOutput(editor);
+      const command = config.get<string>(`commands.externalCommand${i}`);
+      
+      if (editor && command) {
+        try {
+          await replaceSelectionWithExternalOutput(editor, command);          
+        } catch (e: any) {
+          error(`Failed to execute \`${command}\`: ${e?.message || e}`);
+        }
       }
     });
 

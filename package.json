@@ -93,47 +93,47 @@
     "configuration": {
       "title": "Outreach",
       "properties": {
-        "outreach.externalCommand1": {
+        "outreach.commands.externalCommand1": {
           "type": "string",
           "default": "",
           "description": "External command 1"
         },
-        "outreach.externalCommand2": {
+        "outreach.commands.externalCommand2": {
           "type": "string",
           "default": "",
           "description": "External command 2"
         },
-        "outreach.externalCommand3": {
+        "outreach.commands.externalCommand3": {
           "type": "string",
           "default": "",
           "description": "External command 3"
         },
-        "outreach.externalCommand4": {
+        "outreach.commands.externalCommand4": {
           "type": "string",
           "default": "",
           "description": "External command 4"
         },
-        "outreach.externalCommand5": {
+        "outreach.commands.externalCommand5": {
           "type": "string",
           "default": "",
           "description": "External command 5"
         },
-        "outreach.externalCommand6": {
+        "outreach.commands.externalCommand6": {
           "type": "string",
           "default": "",
           "description": "External command 6"
         },
-        "outreach.externalCommand7": {
+        "outreach.commands.externalCommand7": {
           "type": "string",
           "default": "",
           "description": "External command 7"
         },
-        "outreach.externalCommand8": {
+        "outreach.commands.externalCommand8": {
           "type": "string",
           "default": "",
           "description": "External command 8"
         },
-        "outreach.externalCommand9": {
+        "outreach.commands.externalCommand9": {
           "type": "string",
           "default": "",
           "description": "External command 9"
